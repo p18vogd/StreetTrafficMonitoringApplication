@@ -1,9 +1,16 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+
+  backend:
+    container_name: spring-boot-backend
+    build:
+      context: ./backend
     ports:
-      - '5432'
+      - "8080:8082"
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge

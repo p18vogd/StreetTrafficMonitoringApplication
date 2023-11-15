@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a sample Spring Boot application built with Java 17 and managed by Maven. The application is containerized using Docker, and Docker Compose is used for orchestrating the containers.
+This is a Spring Boot application built with Java 17 and managed by Maven. The application is containerized using Docker, and Docker Compose is used for orchestrating the containers.
 
 ## Prerequisites
 
