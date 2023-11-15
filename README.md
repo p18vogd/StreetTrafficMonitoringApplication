@@ -22,7 +22,7 @@ This is a sample Spring Boot application built with Java 17 and managed by Maven
 2. **Build the Application:**
 
     ```bash
-    cd your-spring-boot-app
+    cd TrafficProject
     mvn clean install -DskipTests
     ```
 
