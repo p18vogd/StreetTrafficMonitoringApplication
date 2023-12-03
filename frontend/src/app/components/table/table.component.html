@@ -2,7 +2,7 @@
   <div style="display: flex;">
     <div style="flex: 1;">
       <br>
-      <mat-card-title> Historic traffic data overview <mat-icon>traffic</mat-icon></mat-card-title>
+      <mat-card-title> Traffic data overview <mat-icon>traffic</mat-icon></mat-card-title>
       <mat-panel-description>In this panel a more comprehensive look is shown into traffic patterns across road network.
         It includes information such as the name of the road,
         the number of vehicles that have passed, their average speed, and other relevant details about
@@ -10,15 +10,14 @@
       <br>
       <br>
       <div style="text-align: center;">
-      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>download</mat-icon>Download Data</button>
+      <button mat-button [matMenuTriggerFor]="menu"><mat-icon>download</mat-icon>Download Data </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="downloadFile('xml')">XML</button>
-        <button mat-menu-item>JSON</button>
-        <button mat-menu-item>Excel</button>
+        <button mat-menu-item (click)="downloadFile('json')">JSON</button>
+        <button mat-menu-item (click)="downloadFile('xlsx')">Excel</button>
       </mat-menu>
     </div>
     </div>
-
   </div>
 </mat-card>
 

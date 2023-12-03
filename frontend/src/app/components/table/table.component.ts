@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { TableDataSource, TableItem } from './table-datasource';
 import { TableService } from '../../services/table.service';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 @Component({
     selector: 'app-table',
     templateUrl: './table.component.html',
-    styleUrls: ['./table.component.css']
+    styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
     dataSource: TableDataSource;
@@ -15,26 +16,20 @@ export class TableComponent implements OnInit {
     constructor(private tableService: TableService) {
         this.dataSource = new TableDataSource(tableService);
     }
-
+    isDownloading = false;
     async downloadFile(fileType: string){
-      this.tableService.downloadTableData(fileType).subscribe(response=>{
-        console.log(fileType)
-        var binaryData = [];
-        binaryData.push(response.data);
-        console.log(binaryData)
-        var url = window.URL.createObjectURL(new Blob(binaryData,{type: 'application/xml'}));
-        var a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.setAttribute('target', 'blank');
+      this.tableService.downloadTableData(fileType).subscribe(blob => {
+        this.isDownloading = true;
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
         a.href = url;
-        console.log(url)
-        a.download = response.filename;
-        console.log(response.filename)
-        a.click;
+        a.download = 'Data-Overview.'+fileType;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
-        a.remove();
-      })
+        this.isDownloading = false;
+      });
     }
 
     ngOnInit(): void {
