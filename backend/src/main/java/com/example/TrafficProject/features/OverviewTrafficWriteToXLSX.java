@@ -102,7 +102,7 @@ public class OverviewTrafficWriteToXLSX {
         spreadsheet.autoSizeColumn(4);
 
         try {
-            FileOutputStream out = new FileOutputStream(new File("Traffic-Report.xlsx"));
+            FileOutputStream out = new FileOutputStream("Traffic-Report.xlsx");
             workbook.write(out);
             out.close();
             System.out.println("Excel written successfully..");
