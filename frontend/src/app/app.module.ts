@@ -19,6 +19,12 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatInputModule} from "@angular/material/input";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatNativeDateModule} from "@angular/material/core";
+import {FormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
@@ -42,7 +48,12 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatSortModule,
     MatMenuModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatProgressSpinnerModule,
+    MatNativeDateModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
