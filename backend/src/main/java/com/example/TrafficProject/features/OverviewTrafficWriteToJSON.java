@@ -15,8 +15,8 @@ public class OverviewTrafficWriteToJSON {
         this.govAPIService = govAPIService;
     }
 
-    public List<GovApiData> populateLists(List<GovApiData> dataList){
-        return this.govAPIService.getGOVTrafficData().block();
+    public List<GovApiData> populateLists(List<GovApiData> dataList,String date){
+        return this.govAPIService.getGOVTrafficData(date).block();
     }
 
     public void writeToJSON(List<GovApiData> dataList){

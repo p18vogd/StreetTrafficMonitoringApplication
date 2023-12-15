@@ -19,8 +19,8 @@ public class OverviewTrafficWriteToXLSX {
         this.govAPIService = govAPIService;
     }
 
-    public List<GovApiData> populateLists(List<GovApiData> dataList){
-        return this.govAPIService.getGOVTrafficData().block();
+    public List<GovApiData> populateLists(List<GovApiData> dataList,String date){
+        return this.govAPIService.getGOVTrafficData(date).block();
     }
 
     public void writeXLSX(List<GovApiData> dataList){
@@ -105,7 +105,9 @@ public class OverviewTrafficWriteToXLSX {
             FileOutputStream out = new FileOutputStream("Traffic-Report.xlsx");
             workbook.write(out);
             out.close();
+            workbook.close();
             System.out.println("Excel written successfully..");
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -20,12 +20,12 @@ public class GovAPIService {
     public GovAPIService(WebClient.Builder webClientBuilder ){
         this.webClient = webClientBuilder.baseUrl("https://data.gov.gr").build();
     }
-    public Mono<List<GovApiData>> getGOVTrafficData(){
+    public Mono<List<GovApiData>> getGOVTrafficData(String date){
         return this.webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/api/v1/query/road_traffic_attica")
-                        .queryParam("date_from","2023-09-01")
-                        .queryParam("date_to","2023-09-01")
+                        .queryParam("date_from",date)
+                        .queryParam("date_to",date)
                         .build())
                 .header("Authorization",apiKey)
                 .retrieve()
