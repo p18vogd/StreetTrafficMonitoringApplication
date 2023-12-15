@@ -4,6 +4,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
+import {HttpParams} from "@angular/common/http";
 
 export interface TableItem {
   road_name: string;
@@ -31,38 +32,54 @@ export class TableComponent implements OnInit {
               private dateAdapter: DateAdapter<Date>)
   {
     this.dateAdapter.setLocale('en-GB');
+
   }
 
   formattedDate!: string;
-
+  dateF !: string;
   onDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
-    this.formattedDate = selectedDate.value?.toLocaleDateString() || '';
-    console.log('Selected Date:', this.formattedDate);
-    // You can perform additional actions with the formatted date here
+    let params = new HttpParams();
+    if (selectedDate.value) {
+      this.formattedDate = selectedDate.value.toLocaleDateString();
+      console.log('Selected Date:', this.formattedDate);
+      params = params.append('date',this.formattedDate);
+      this.tableService.fetchTableData(params).subscribe(
+        (data: TableItem[]) => {
+          this.dataSource = new MatTableDataSource<TableItem>(data);
+          this.dataSource.paginator = this.paginator;
+
+        },
+        (error) => {
+          console.error('Error fetching table data:', error);
+        });
+    }
   }
     async downloadFile(fileType: string){
-      this.tableService.downloadTableData(fileType).subscribe(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Data-Overview.'+fileType;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      });
+      let params = new HttpParams();
+        params = params.append('date',this.formattedDate);
+        this.tableService.downloadTableData(fileType,params).subscribe(blob => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'Data-Overview.'+fileType;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        });
+
     }
   ngOnInit(): void {
-    this.tableService.fetchTableData().subscribe(
-      (data: TableItem[]) => {
-        this.dataSource = new MatTableDataSource<TableItem>(data);
-        this.dataSource.paginator = this.paginator;
-
-      },
-      (error) => {
-        console.error('Error fetching table data:', error);
-      }
-    );
+    // this.tableService.fetchTableData().subscribe(
+    //   (data: TableItem[]) => {
+    //     this.dataSource = new MatTableDataSource<TableItem>(data);
+    //     this.dataSource.paginator = this.paginator;
+    //
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching table data:', error);
+    //   }
+    // );
   }
 
 }

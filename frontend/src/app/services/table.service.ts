@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {TableItem} from "../components/table/table-datasource";
 import {map} from "rxjs/operators";
 import {HOST,PORT} from "../ApplicationHosts"
 
@@ -10,17 +9,19 @@ import {HOST,PORT} from "../ApplicationHosts"
 })
 export class TableService {
   private apiUrl = 'http://' + HOST + ':' + PORT + '/gov' ;
+  private getDataByDate = 'http://' + HOST + ':' + PORT + '/getDataByDate' ;
   private getXMLfile = 'http://' + HOST + ':' + PORT + '/getXML';
   private getXLSXfile = 'http://' + HOST + ':' + PORT + '/getXLSX';
   private getJSONfile = 'http://' + HOST + ':' + PORT + '/getJSON';
   downloadUrl = '';
   constructor(private http: HttpClient) { }
 
-  fetchTableData(): Observable<TableItem[]> {
-    return this.http.get<TableItem[]>(this.apiUrl);
+  fetchTableData(requestParams : HttpParams): Observable<TableItem[]> {
+    return this.http.get<TableItem[]>(this.apiUrl, {params : requestParams});
   }
 
-  downloadTableData(fileType: string): Observable<Blob> {
+
+  downloadTableData(fileType: string,requestParams : HttpParams): Observable<Blob> {
     if (fileType == 'xml') {
       this.downloadUrl = this.getXMLfile;
       console.log(this.downloadUrl)
@@ -30,6 +31,14 @@ export class TableService {
       this.downloadUrl = this.getJSONfile;
     }
 
-    return this.http.get(`${this.downloadUrl}`, {responseType: 'blob'})
+    return this.http.get(`${this.downloadUrl}`, {responseType: 'blob',params: requestParams})
   }
+}
+
+export interface TableItem {
+  road_name: string;
+  road_info: string;
+  appprocesstime: string;
+  countedcars: number;
+  average_speed: number;
 }
