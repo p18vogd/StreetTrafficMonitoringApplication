@@ -15,9 +15,9 @@ export interface TableItem {
 }
 
 @Component({
-    selector: 'app-table',
-    templateUrl: './table.component.html',
-    styleUrls: ['./table.component.css'],
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
 
@@ -35,40 +35,69 @@ export class TableComponent implements OnInit {
 
   }
 
-  formattedDate!: string;
-  dateF !: string;
-  onDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
-    let params = new HttpParams();
-    if (selectedDate.value) {
-      this.formattedDate = selectedDate.value.toLocaleDateString();
-      console.log('Selected Date:', this.formattedDate);
-      params = params.append('date',this.formattedDate);
-      this.tableService.fetchTableData(params).subscribe(
-        (data: TableItem[]) => {
-          this.dataSource = new MatTableDataSource<TableItem>(data);
-          this.dataSource.paginator = this.paginator;
+  formattedStartDate!: string;
+  formattedEndDate!: string;
 
-        },
-        (error) => {
-          console.error('Error fetching table data:', error);
-        });
+  isDownloading !: boolean;
+  updateTableContent !: boolean;
+  noAvailableData!: boolean;
+  onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
+    if (selectedDate.value) {
+      this.noAvailableData = false;
+      this.formattedStartDate = selectedDate.value.toLocaleDateString();
+      console.log('Selected Start Date:', this.formattedStartDate);
     }
   }
-    async downloadFile(fileType: string){
-      let params = new HttpParams();
-        params = params.append('date',this.formattedDate);
-        this.tableService.downloadTableData(fileType,params).subscribe(blob => {
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'Data-Overview.'+fileType;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        });
 
+  onEndDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
+    if (selectedDate.value) {
+      this.formattedEndDate = selectedDate.value.toLocaleDateString();
+      console.log('Selected End Date:', this.formattedEndDate);
+      this.fetchData();
     }
+  }
+
+  fetchData() {
+    this.updateTableContent = true;
+    this.noAvailableData = false;
+    let params = new HttpParams();
+    params = params.append('startDate', this.formattedStartDate);
+    params = params.append('endDate', this.formattedEndDate);
+    this.tableService.fetchTableData(params).subscribe(
+      (data: TableItem[]) => {
+        this.dataSource = new MatTableDataSource<TableItem>(data);
+        this.dataSource.paginator = this.paginator;
+        this.updateTableContent = false;
+
+        if(this.dataSource.data.length === 0){
+          this.noAvailableData =true;
+        }
+
+      },
+      (error) => {
+        console.error('Error fetching table data:', error);
+      });
+  }
+
+  async downloadFile(fileType: string){
+    this.noAvailableData = false;
+    this.isDownloading = true;
+    let params = new HttpParams();
+    params = params.append('startDate', this.formattedStartDate);
+    params = params.append('endDate', this.formattedEndDate);
+    this.tableService.downloadTableData(fileType,params).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Data-Overview.'+fileType;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      this.isDownloading = false;
+    });
+
+  }
   ngOnInit(): void {
     // this.tableService.fetchTableData().subscribe(
     //   (data: TableItem[]) => {

@@ -11,11 +11,16 @@
       <br>
 
       <div style="text-align: center;">
-        <mat-form-field class="example-full-width">
-          <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker touchUi="true" #picker></mat-datepicker>
+        <mat-form-field>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate  (dateChange)="onStartDateChange($event)" placeholder="Start date">
+            <input matEndDate  (dateChange)="onEndDateChange($event)" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker touchUi="true" #picker></mat-date-range-picker>
         </mat-form-field>
+
         <br>
       <button mat-button [matMenuTriggerFor]="menu"><mat-icon>download</mat-icon>Download Data </button>
       <mat-menu #menu="matMenu">
@@ -23,6 +28,22 @@
         <button mat-menu-item (click)="downloadFile('json')">JSON</button>
         <button mat-menu-item (click)="downloadFile('xlsx')">Excel</button>
       </mat-menu>
+        <ng-container *ngIf="isDownloading">
+          <br><br>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          <br>
+          <mat-card-subtitle>Your Data will be downloaded soon</mat-card-subtitle>
+        </ng-container>
+        <ng-container *ngIf="updateTableContent">
+          <br><br>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          <br>
+          <mat-card-subtitle>Updating table content</mat-card-subtitle>
+        </ng-container>
+        <ng-container *ngIf="noAvailableData">
+          <br><br><br>
+            <mat-card-subtitle>There are no available data for this time period 😢</mat-card-subtitle>
+        </ng-container>
     </div>
     </div>
   </div>
