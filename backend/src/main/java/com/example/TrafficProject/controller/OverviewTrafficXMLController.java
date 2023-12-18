@@ -29,11 +29,12 @@ public class OverviewTrafficXMLController {
     }
 
     @GetMapping(value = "/getXML")
-    public void getXMLFile(HttpServletResponse response,@RequestParam String date) throws IOException, FileNotFoundException, ParserConfigurationException, ParseException {
+    public void getXMLFile(HttpServletResponse response,@RequestParam String startDate,@RequestParam String endDate) throws IOException, FileNotFoundException, ParserConfigurationException, ParseException {
         List<GovApiData> dataList = new ArrayList<>();
-        date = ConvertDateFormat.changeDateFormat(date);
+        startDate = ConvertDateFormat.changeDateFormat(startDate);
+        endDate = ConvertDateFormat.changeDateFormat(endDate);
         OverviewTrafficWriteToXML overviewTrafficWriteToXML = new OverviewTrafficWriteToXML(govAPIService);
-        dataList = overviewTrafficWriteToXML.populateLists(dataList,date);
+        dataList = overviewTrafficWriteToXML.populateLists(dataList,startDate,endDate);
         overviewTrafficWriteToXML.writeXML(dataList);
         output = new File("Traffic.xml");
         try(InputStream inputStream = new FileInputStream(output)){
@@ -45,11 +46,12 @@ public class OverviewTrafficXMLController {
     }
 
     @GetMapping(value = "/getXLSX")
-    public void getXLSXFile(HttpServletResponse response,@RequestParam String date) throws IOException, ParseException {
+    public void getXLSXFile(HttpServletResponse response,@RequestParam String startDate, @RequestParam String endDate) throws IOException, ParseException {
         List<GovApiData> dataList = new ArrayList<>();
-        date = ConvertDateFormat.changeDateFormat(date);
+        startDate = ConvertDateFormat.changeDateFormat(startDate);
+        endDate = ConvertDateFormat.changeDateFormat(endDate);
         OverviewTrafficWriteToXLSX overviewTrafficWriteToXLSX = new OverviewTrafficWriteToXLSX(govAPIService);
-        dataList = overviewTrafficWriteToXLSX.populateLists(dataList,date);
+        dataList = overviewTrafficWriteToXLSX.populateLists(dataList,startDate,endDate);
         overviewTrafficWriteToXLSX.writeXLSX(dataList);
         output = new File("Traffic-Report.xlsx");
 
@@ -64,11 +66,12 @@ public class OverviewTrafficXMLController {
     }
 
     @GetMapping(value = "/getJSON")
-    public void getJSONFile(HttpServletResponse response,@RequestParam String date) throws IOException, ParseException {
+    public void getJSONFile(HttpServletResponse response,@RequestParam String startDate,@RequestParam String endDate) throws IOException, ParseException {
         List<GovApiData> dataList = new ArrayList<>();
-        date = ConvertDateFormat.changeDateFormat(date);
+        startDate = ConvertDateFormat.changeDateFormat(startDate);
+        endDate = ConvertDateFormat.changeDateFormat(endDate);
         OverviewTrafficWriteToJSON overviewTrafficWriteToJSON = new OverviewTrafficWriteToJSON(govAPIService);
-        dataList = overviewTrafficWriteToJSON.populateLists(dataList,date);
+        dataList = overviewTrafficWriteToJSON.populateLists(dataList,startDate,endDate);
         overviewTrafficWriteToJSON.writeToJSON(dataList);
         output = new File("file.json");
 

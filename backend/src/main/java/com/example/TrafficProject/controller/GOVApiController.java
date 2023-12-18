@@ -27,9 +27,11 @@ public class GOVApiController {
     }
 
     @GetMapping(value = "/gov")
-    public Mono<List<GovApiData>> fetchData(@RequestParam String date) throws ParseException {
-        date = ConvertDateFormat.changeDateFormat(date);
-        System.out.println(date);
-        return govAPIService.getGOVTrafficData(date);
+    public Mono<List<GovApiData>> fetchData(@RequestParam String startDate,
+                                            @RequestParam String endDate) throws ParseException {
+        startDate = ConvertDateFormat.changeDateFormat(startDate);
+        endDate = ConvertDateFormat.changeDateFormat(endDate);
+        System.out.println(startDate + " - " + endDate);
+        return govAPIService.getGOVTrafficData(startDate,endDate);
     }
 }

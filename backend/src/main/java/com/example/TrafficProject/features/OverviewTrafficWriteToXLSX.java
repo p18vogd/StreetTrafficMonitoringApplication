@@ -19,8 +19,8 @@ public class OverviewTrafficWriteToXLSX {
         this.govAPIService = govAPIService;
     }
 
-    public List<GovApiData> populateLists(List<GovApiData> dataList,String date){
-        return this.govAPIService.getGOVTrafficData(date).block();
+    public List<GovApiData> populateLists(List<GovApiData> dataList,String startDate,String endDate){
+        return this.govAPIService.getGOVTrafficData(startDate,endDate).block();
     }
 
     public void writeXLSX(List<GovApiData> dataList){
