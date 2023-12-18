@@ -24,6 +24,10 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatNativeDateModule} from "@angular/material/core";
 import {FormsModule} from "@angular/forms";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatGridListModule} from "@angular/material/grid-list";
+import { NgChartsModule } from 'ng2-charts';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -31,30 +35,34 @@ import {FormsModule} from "@angular/forms";
     AppComponent,
     NavigationComponent,
     MapComponent,
-    TableComponent
+    TableComponent,
+    DashboardComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatMenuModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatProgressSpinnerModule,
-    MatNativeDateModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        HttpClientModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatMenuModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatProgressSpinnerModule,
+        MatNativeDateModule,
+        FormsModule,
+        MatProgressBarModule,
+        MatGridListModule,
+        NgChartsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

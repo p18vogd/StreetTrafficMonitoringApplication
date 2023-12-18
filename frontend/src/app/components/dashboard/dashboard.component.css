@@ -1,0 +1,61 @@
+/*mat-card-title {*/
+/*  text-align: center;*/
+/*  font-size: 14px;*/
+/*  color: #333;*/
+/*  margin-bottom: 10px;*/
+/*}*/
+
+/*mat-card-subtitle {*/
+/*  text-align: center;*/
+/*  font-size: 14px;*/
+/*  margin-bottom: 2px;*/
+/*}*/
+/*!* src/app/dashboard/dashboard.component.css *!*/
+
+/*.dashboard-container {*/
+/*  max-width: 1200px;*/
+/*  margin: 0 auto;*/
+/*}*/
+
+/*.card-row {*/
+/*  display: flex;*/
+/*  gap: 16px; !* Adjust the gap between cards as needed *!*/
+/*}*/
+
+/*.dashboard-card {*/
+/*  flex: 1;*/
+/*  max-width: calc(25% - 16px); !* Adjust the width of each card as needed *!*/
+/*}*/
+/* src/app/dashboard/dashboard.component.css */
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px; /* Adjust the gap between cards as needed */
+}
+
+.dashboard-card {
+  flex: 1;
+  max-width: calc(25% - 16px); /* Adjust the width of each card as needed */
+  margin-bottom: 16px; /* Add some margin at the bottom for spacing */
+}
+
+.dashboard-content {
+  padding: 20px; /* Add padding to the content area */
+}
+
+/* Additional styling for the overall layout */
+.mat-form-field {
+  margin-bottom: 20px;
+}
+
+.mat-progress-bar {
+  margin-top: 20px;
+}
