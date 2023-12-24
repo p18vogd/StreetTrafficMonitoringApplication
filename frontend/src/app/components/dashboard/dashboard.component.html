@@ -1,3 +1,4 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <div style="text-align: center;">
   <br><br>
 <mat-form-field>
@@ -19,44 +20,102 @@
 </div>
 
 
-<div class="dashboard-container">
-  <div class="card-row">
-    <mat-card class="dashboard-card">
+<div class="dashboard-container-small">
+  <div class="card-row-small">
+
+    <mat-card class="dashboard-card-small">
       <mat-card-header>
-        <mat-card-subtitle>Street with highest amount of cars passed by</mat-card-subtitle>
+        <mat-card-title><i class="material-icons">directions_car</i> Vehicles in total </mat-card-title>
+        <mat-card-subtitle>Cars on road for that period</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
+        <ng-container *ngIf="isLoadingData">
+          <div class="loading-container">
+            <div class="dot dot1"></div>
+            <div class="dot dot2"></div>
+            <div class="dot dot3"></div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isLoadingData">
+          <h2>{{numberOfVehicles}}</h2>
+        </ng-container>
       </mat-card-content>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="showCardFooter">
+        <mat-card-footer><i class="material-icons" style="font-size:15px">update</i>Updated </mat-card-footer>
+      </ng-container>
     </mat-card>
 
-    <mat-card class="dashboard-card">
+    <mat-card class="dashboard-card-small">
       <mat-card-header>
-        <mat-card-title>Card 2</mat-card-title>
+        <mat-card-title><i class="material-icons">speed</i>Average speed</mat-card-title>
+        <mat-card-subtitle>From vehicles across road network</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <!-- Content for Card 2 -->
+        <ng-container *ngIf="isLoadingData">
+          <div class="loading-container">
+            <div class="dot dot1"></div>
+            <div class="dot dot2"></div>
+            <div class="dot dot3"></div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isLoadingData">
+          <h2>{{averageSpeedInRoad}}</h2>
+        </ng-container>
       </mat-card-content>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="showCardFooter">
+        <mat-card-footer><i class="material-icons" style="font-size:15px">update</i>Updated </mat-card-footer>
+      </ng-container>
     </mat-card>
 
-    <mat-card class="dashboard-card">
+    <mat-card class="dashboard-card-small">
       <mat-card-header>
-        <mat-card-title>Card 3</mat-card-title>
+        <mat-card-title><i class="material-icons">traffic</i> Roads</mat-card-title>
+        <mat-card-subtitle>Number of roads monitored</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <!-- Content for Card 3 -->
+        <ng-container *ngIf="isLoadingData">
+          <div class="loading-container">
+            <div class="dot dot1"></div>
+            <div class="dot dot2"></div>
+            <div class="dot dot3"></div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isLoadingData">
+          <h2>{{numberOfRoadsInNetwork}}</h2>
+        </ng-container>
       </mat-card-content>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="showCardFooter">
+        <mat-card-footer><i class="material-icons" style="font-size:15px">update</i>Updated </mat-card-footer>
+      </ng-container>
     </mat-card>
 
-    <mat-card class="dashboard-card">
+    <mat-card class="dashboard-card-small">
       <mat-card-header>
-        <mat-card-title>Card 4</mat-card-title>
+        <mat-card-title><i class="material-icons">sensors</i> Sensors</mat-card-title>
+        <mat-card-subtitle>Number of sensors in roads</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <!-- Content for Card 4 -->
-      </mat-card-content>
+        <ng-container *ngIf="isLoadingData">
+          <div class="loading-container">
+            <div class="dot dot1"></div>
+            <div class="dot dot2"></div>
+            <div class="dot dot3"></div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isLoadingData">
+          <h2>35</h2>
+        </ng-container>      </mat-card-content>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="showCardFooter">
+        <mat-card-footer><i class="material-icons" style="font-size:15px">update</i>Updated </mat-card-footer>
+      </ng-container>
     </mat-card>
   </div>
 </div>
+
 <!--  END OF MATCARDS-->
 <br>
 <!--<mat-card>-->
@@ -65,12 +124,28 @@
 <!--    <canvas id="line-chart" width="200" height="75" style="text-align: center;" ></canvas>-->
 <!--  </div>-->
 <!--</mat-card>-->
-<mat-card style="width: 300px; height: 200px;">
-  <mat-card-title>Counted cars</mat-card-title>
-  <div class="dashboard-content">
-    <canvas id="line-chart" width="280" height="120" style="text-align: center;"></canvas>
-  </div>
-</mat-card>
+<div>
+  <mat-card class="dashboard-card">
+    <mat-tab-group>
+      <mat-tab label="First">
+        <mat-card-title>Counted cars</mat-card-title>
+        <div class="dashboard-content">
+          <canvas class="canvas" id="line-chart"></canvas>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Second">
+        <mat-card-title>Counted cars</mat-card-title>
+        <div class="dashboard-content">
+          <canvas id="line-chart-2"></canvas>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
+
+
+
 
 
 
