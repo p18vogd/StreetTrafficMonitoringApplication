@@ -3,7 +3,6 @@
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  padding: 20px;
 }
 
 .card-row-small {
@@ -17,7 +16,7 @@
   flex: 1;
   max-width: calc(25% - 16px);
   margin-bottom: 16px;
-  border-radius: 10px;
+  border-radius: 15px;
   transition: 0.3s;
   box-sizing: border-box;
   display: flex;
@@ -29,7 +28,7 @@
 .dashboard-content-small {
   flex: 1;
   padding: 20px;
-  color: #666;
+  color: #050505;
   font-size: 1.5em;
   display: flex;
   flex-direction: column;
@@ -42,7 +41,7 @@
 }
 
 .mat-card-header-small {
-  color: #333;
+  color: #000000;
   font-size: 1.2em;
   text-align: center;
 }
@@ -60,7 +59,7 @@ mat-card-footer {
   text-align: center;
   background-color: #ffffff;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 mat-card-footer i {
@@ -101,7 +100,7 @@ mat-card-footer i {
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 16px;
-    height: 100%; /* Take full height of the tab body */
+    height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -133,7 +132,7 @@ mat-card-footer i {
 .dot {
   width: 10px; /* Adjusted size */
   height: 10px; /* Adjusted size */
-  background-color: rgba(54, 81, 115, 0.45); /* You can change the color */
+  background-color: rgb(73, 81, 173); /* You can change the color */
   border-radius: 50%;
   margin: 0 3px; /* Adjusted spacing */
   animation: bounce 0.6s infinite alternate;
@@ -157,3 +156,36 @@ mat-card-footer i {
   }
 }
 /* End of loading animation for mini cards */
+
+/* Header card */
+.dashboard-card-header {
+  display: flex;
+  flex-direction: row;
+  border-radius: 15px;
+  max-width: 100%;
+  margin: 1% auto;
+  text-align: left;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+
+.dashboard-card-header .card-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card-header mat-card-title,
+.dashboard-card-header mat-card-subtitle {
+  margin-bottom: 3px; /* Add spacing between title and subtitle */
+}
+
+.dashboard-card-header .actions {
+  align-self: flex-end;
+  margin-right: 7px; /* Adjust the margin as needed */
+}
+
+.dashboard-card-header .content {
+  flex-grow: 1;
+}
+/* End of header card */
+

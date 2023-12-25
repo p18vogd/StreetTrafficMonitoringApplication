@@ -60,6 +60,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     this.dashboardService.getChartData(params).subscribe(data => {
       let label = data.map((data: { road_name: any; }) => data.road_name);
       let dataset = data.map((data: { countedcars: any; }) => data.countedcars);
+      let timestamp = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
       console.log(label);
       console.log(dataset);
       if (this.chart instanceof Chart) {
@@ -98,7 +99,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     params = params.append('endDate',endDate);
     this.dashboardService.getMiniCardData(params).subscribe(data => {
       this.numberOfVehicles = data[0].toLocaleString("de-DE");
-      this.averageSpeedInRoad = data[1].toString() + 'km/h';
+      this.averageSpeedInRoad = data[1].toString() + ' km/h';
       this.numberOfRoadsInNetwork = data[2].toString();
       if(data[0] === 0){
         this.numberOfVehicles = 'No available data'
