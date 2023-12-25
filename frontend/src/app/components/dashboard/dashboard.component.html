@@ -35,7 +35,6 @@
     <br>
   </ng-container>
 
-
 <div class="dashboard-container-small">
   <div class="card-row-small">
 
@@ -122,7 +121,7 @@
           </div>
         </ng-container>
         <ng-container *ngIf="!isLoadingData">
-          <h2>35</h2>
+          <h2>{{numberOfSensors}}</h2>
         </ng-container>
       </mat-card-content>
 
@@ -135,32 +134,66 @@
 </div>
 
 <!--  END OF MATCARDS-->
-<!--<mat-card>-->
-<!--  <mat-card-title>Counted cars</mat-card-title>-->
-<!--  <div class="dashboard-content">-->
-<!--    <canvas id="line-chart" width="200" height="75" style="text-align: center;" ></canvas>-->
-<!--  </div>-->
-<!--</mat-card>-->
-<div>
-  <mat-card class="dashboard-card">
-    <mat-tab-group>
-      <mat-tab label="First">
-        <mat-card-title>Counted cars</mat-card-title>
-        <div class="dashboard-content">
-          <canvas class="canvas" id="line-chart"></canvas>
-        </div>
-      </mat-tab>
 
-      <mat-tab label="Second">
-        <mat-card-title>Counted cars</mat-card-title>
-        <div class="dashboard-content">
-          <canvas id="line-chart-2"></canvas>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+<!--<div>-->
+<!--  <mat-card class="dashboard-card">-->
+<!--    <mat-tab-group>-->
+<!--      <mat-tab label="First">-->
+<!--        <mat-card-title>Counted cars</mat-card-title>-->
+<!--        <div class="dashboard-content">-->
+<!--          <canvas class="canvas" id="line-chart"></canvas>-->
+<!--        </div>-->
+<!--      </mat-tab>-->
+
+<!--      <mat-tab label="Second">-->
+<!--        <mat-card-title>Counted cars</mat-card-title>-->
+<!--        <div class="dashboard-content">-->
+<!--          <canvas id="line-chart-2"></canvas>-->
+<!--        </div>-->
+<!--      </mat-tab>-->
+<!--    </mat-tab-group>-->
+<!--  </mat-card>-->
+<!--</div>-->
+
+<div class="card-container">
+  <mat-card class="right-card">
+    <mat-card-content>
+      <mat-card-title>Highest amount of vehicles</mat-card-title>
+      <mat-card-subtitle>Top 10 street with the highest number of vehicles passed by </mat-card-subtitle>
+      <div class="dashboard-content">
+        <canvas class="canvas" id="line-chart"></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="left-card">
+    <mat-card-content>
+      <mat-card-title>Speed Overview</mat-card-title>
+      <mat-card-subtitle>Changes in vehicle speeds</mat-card-subtitle>
+
+    </mat-card-content>
   </mat-card>
 </div>
 
+<div class="card-container">
+  <mat-card class="left-card">
+    <mat-card-content>
+      <mat-card-title>Highest amount of vehicles</mat-card-title>
+      <mat-card-subtitle>Top 10 street with the highest number of vehicles passed by </mat-card-subtitle>
+      <div class="dashboard-content">
+        <canvas class="canvas" id="line-chart-1"></canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="right-card">
+    <mat-card-content>
+      <mat-card-title>Speed Overview</mat-card-title>
+      <mat-card-subtitle>Changes in vehicle speeds</mat-card-subtitle>
+
+    </mat-card-content>
+  </mat-card>
+</div>
 
 
 

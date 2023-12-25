@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   // years: number[];
   data: any;
   chart: any=[];
-
+  vehicleData !: any[];
   formattedStartDate!: string;
   formattedEndDate!: string;
   isLoadingData !: boolean;
@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   numberOfVehicles !: string;
   averageSpeedInRoad !: string;
   numberOfRoadsInNetwork !: string;
+  numberOfSensors !: string;
   showCardFooter !: boolean;
 
 
@@ -53,45 +54,62 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
   updateChart(startDate: string, endDate: string): void {
     this.isLoadingData = true;
     this.showCardFooter = false;
+
     let params = new HttpParams();
     params = params.append('startDate', startDate);
-    params = params.append('endDate',endDate);
+    params = params.append('endDate', endDate);
 
     this.dashboardService.getChartData(params).subscribe(data => {
-      let label = data.map((data: { road_name: any; }) => data.road_name);
+      let labels = data.map((data: { road_name: any; }) => data.road_name);
       let dataset = data.map((data: { countedcars: any; }) => data.countedcars);
-      let timestamp = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
-      console.log(label);
+      let timestamps = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
+      this.vehicleData = data;
+      console.log(labels);
       console.log(dataset);
+
       if (this.chart instanceof Chart) {
         this.chart.destroy(); // Destroy the existing chart
       }
 
       this.chart = new Chart('line-chart', {
-          type: 'bar',
-          data: {
-            labels:label,
-            datasets: [
-              {
-                label: 'Cars passed by',
-                data: dataset,
-                borderWidth: 1, //width="400" height="200"
-              },
-            ],
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Cars passed by',
+              data: dataset,
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
           },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: true,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (context) => {
+                  const label = context.label || '';
+                  const timestamp = timestamps[context.dataIndex];
+                  const formattedTimestamp = new Date(timestamp).toLocaleString();
+                  return `${label}: ${context.parsed.y} (Timestamp: ${formattedTimestamp})`;
+                },
               },
             },
           },
-        });
+        },
+      });
+
       this.isLoadingData = false;
       this.showCardFooter = true;
     });
   }
+
 
   updateMiniCardContent(startDate: string, endDate: string): void {
     let params = new HttpParams();
@@ -101,6 +119,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.numberOfVehicles = data[0].toLocaleString("de-DE");
       this.averageSpeedInRoad = data[1].toString() + ' km/h';
       this.numberOfRoadsInNetwork = data[2].toString();
+      this.numberOfSensors = data[3].toString();
       if(data[0] === 0){
         this.numberOfVehicles = 'No available data'
       }
@@ -109,6 +128,9 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       }
       if(data[2] === 0){
         this.numberOfRoadsInNetwork = 'No available data'
+      }
+      if(data[3] === 0){
+        this.numberOfSensors = 'No available data'
       }
     });
   }
