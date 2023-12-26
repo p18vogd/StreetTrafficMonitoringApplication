@@ -18,6 +18,8 @@ public class GovApiData {
     private Double averageSpeed;
     @JsonProperty("appprocesstime")
     private Date timestamp;
+    @JsonProperty("deviceid")
+    private String sensor;
 
     public Date getTimestamp() {
         return timestamp;
@@ -59,6 +61,13 @@ public class GovApiData {
         this.road_name = road_name;
     }
 
+    public String getSensor() {
+        return sensor;
+    }
+    public void setSensor(String sensor) {
+        this.sensor = sensor;
+    }
+
     @Override
     public String toString() {
         return "GovApiData{" +
@@ -67,6 +76,7 @@ public class GovApiData {
                 ", countedCars=" + countedCars +
                 ", averageSpeed=" + averageSpeed +
                 ", timestamp=" + timestamp +
+                ", sensor='" + sensor + '\'' +
                 '}';
     }
 }
