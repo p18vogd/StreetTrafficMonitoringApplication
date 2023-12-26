@@ -40,6 +40,11 @@ public class OverviewTrafficWriteToXML {
             Element measurementElement = document.createElement("Measurement");
             measurementElement.setAttribute("timestamp", data.getTimestamp().toString());
 
+            // Write Sensor info Average Speed //
+            Element sensorID = document.createElement("sensor");
+            sensorID.appendChild(document.createTextNode(data.getSensor()));
+            measurementElement.appendChild(sensorID);
+
             // Write to XML Average Speed //
             Element averageSpeed = document.createElement("averageSpeed");
             averageSpeed.appendChild(document.createTextNode(data.getAverageSpeed().toString()));

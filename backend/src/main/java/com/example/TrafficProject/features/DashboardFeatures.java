@@ -59,6 +59,14 @@ public class DashboardFeatures {
                 .count();
         miniCardList.add(numberOfRoads);
         System.out.println("Number of Roads " + numberOfRoads);
+
+        long numberOfSensors = streetData.stream()
+                .map(GovApiData::getSensor)
+                .distinct()
+                .count();
+        System.out.println("Number of Sensors " + numberOfSensors);
+        miniCardList.add(numberOfSensors);
+
         return miniCardList;
     }
 }

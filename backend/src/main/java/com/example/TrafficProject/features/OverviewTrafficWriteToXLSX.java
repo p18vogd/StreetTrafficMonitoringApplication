@@ -53,18 +53,22 @@ public class OverviewTrafficWriteToXLSX {
         headerCell.setCellStyle(headerStyle);
 
         headerCell = header.createCell(1);
-        headerCell.setCellValue("Road Name");
+        headerCell.setCellValue("Sensor ID");
         headerCell.setCellStyle(headerStyle);
 
         headerCell = header.createCell(2);
-        headerCell.setCellValue("Counted Cars");
+        headerCell.setCellValue("Road Name");
         headerCell.setCellStyle(headerStyle);
 
         headerCell = header.createCell(3);
-        headerCell.setCellValue("Average Speed");
+        headerCell.setCellValue("Counted Cars");
         headerCell.setCellStyle(headerStyle);
 
         headerCell = header.createCell(4);
+        headerCell.setCellValue("Average Speed");
+        headerCell.setCellStyle(headerStyle);
+
+        headerCell = header.createCell(5);
         headerCell.setCellValue("Road Info");
         headerCell.setCellStyle(headerStyle);
 
@@ -79,18 +83,22 @@ public class OverviewTrafficWriteToXLSX {
             cell.setCellStyle(style);
 
             cell = row.createCell(1);
-            cell.setCellValue(data.getRoad_name());
+            cell.setCellValue(data.getSensor());
             cell.setCellStyle(style);
 
             cell = row.createCell(2);
-            cell.setCellValue(data.getCountedCars());
+            cell.setCellValue(data.getRoad_name());
             cell.setCellStyle(style);
 
             cell = row.createCell(3);
-            cell.setCellValue(data.getAverageSpeed());
+            cell.setCellValue(data.getCountedCars());
             cell.setCellStyle(style);
 
             cell = row.createCell(4);
+            cell.setCellValue(data.getAverageSpeed());
+            cell.setCellStyle(style);
+
+            cell = row.createCell(5);
             cell.setCellValue(data.getRoadInfo());
             cell.setCellStyle(style);
         }
@@ -100,6 +108,7 @@ public class OverviewTrafficWriteToXLSX {
         spreadsheet.autoSizeColumn(2);
         spreadsheet.autoSizeColumn(3);
         spreadsheet.autoSizeColumn(4);
+        spreadsheet.autoSizeColumn(5);
 
         try {
             FileOutputStream out = new FileOutputStream("Traffic-Report.xlsx");
