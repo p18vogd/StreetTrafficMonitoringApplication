@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit {
   data: any;
   chart: any=[];
   vehicleData !: any[];
+  streetArrayForTable!: any[];
+  speedArrayForTable!: any[];
   formattedStartDate!: string;
   formattedEndDate!: string;
   isLoadingData !: boolean;
@@ -75,6 +77,9 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.vehicleData = data;
       console.log(labels);
       console.log(dataset);
+      this.speedArrayForTable = speed.map(speed => Math.floor(speed));
+      this.streetArrayForTable = labels;
+      this.avg
 
       if (this.chart instanceof Chart) {
         this.chart.destroy(); // Destroy the existing chart
@@ -113,7 +118,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
           },
         },
       });
-      // this.pieComponent.updatePieChart(labels,speed);
+      this.pieComponent.updatePieChart(labels,dataset,speed);
       this.speedLineComponent.updateLineChart(labels,speed);
       this.statusTableComponent.createDashboardTable(data,this.avg);
       this.isLoadingData = false;

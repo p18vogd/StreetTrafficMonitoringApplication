@@ -1,0 +1,223 @@
+/* Mini cards */
+.dashboard-container-small {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.card-row-small {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+}
+
+.dashboard-card-small {
+    flex: 1;
+    max-width: calc(25% - 16px);
+    margin-bottom: 16px;
+    border-radius: 15px;
+    transition: 0.3s;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.dashboard-content-small {
+    flex: 1;
+    padding: 20px;
+    color: #050505;
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboard-card-small:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.mat-card-header-small {
+    color: #000000;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.mat-form-field-small {
+    margin-bottom: 20px;
+}
+
+.mat-progress-bar {
+    margin-top: 20px;
+}
+mat-card-footer {
+    font-size: 0.7em;
+    color: #666;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+mat-card-footer i {
+    vertical-align: middle;
+    margin-right: 5px;
+}
+/* End of mini cards */
+
+
+/* Dashboard content  */
+.dashboard-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    margin: 10px;
+    height: 500px;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    .mat-tab-group {
+        width: 100%;
+        height: 100%;
+        flex: 1; /* Allow tabs to take full height of the card */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mat-tab-labels {
+        background-color: #2196F3;
+        color: #fff;
+    }
+
+    .mat-tab-body-wrapper {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 16px;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dashboard-content {
+        margin-top: 16px;
+        flex: 1;
+        position: relative;
+        overflow: auto;
+    }
+
+    .canvas {
+        flex: 1;
+        width: auto !important;
+        height: auto !important; /* Adjust if needed, depending on the desired chart height */
+    }
+}
+
+/* End of dashboard content */
+
+/* Loading animation for mini cards */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6vh;
+}
+
+.dot {
+    width: 10px; /* Adjusted size */
+    height: 10px; /* Adjusted size */
+    background-color: rgb(73, 81, 173); /* You can change the color */
+    border-radius: 50%;
+    margin: 0 3px; /* Adjusted spacing */
+    animation: bounce 0.6s infinite alternate;
+}
+
+.dot1 {
+    animation-delay: 0.1s;
+}
+
+.dot2 {
+    animation-delay: 0.3s;
+}
+
+.dot3 {
+    animation-delay: 0.5s;
+}
+
+@keyframes bounce {
+    to {
+        transform: translateY(-7px); /* Adjusted bounce height */
+    }
+}
+/* End of loading animation for mini cards */
+
+/* Header card */
+.dashboard-card-header {
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+    max-width: 100%;
+    margin: 1% auto;
+    text-align: left;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.dashboard-card-header .card-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card-header mat-card-title,
+.dashboard-card-header mat-card-subtitle {
+    margin-bottom: 3px; /* Add spacing between title and subtitle */
+}
+
+.dashboard-card-header .actions {
+    align-self: flex-end;
+    margin-right: 7px; /* Adjust the margin as needed */
+}
+
+.dashboard-card-header .content {
+    flex-grow: 1;
+}
+/* End of header card */
+/* Chart and divider cards */
+.card-container {
+    border-radius: 15px;
+    margin-bottom: 16px;
+    transition: 0.3s;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between; /* Adjust as needed */
+}
+
+.left-card,
+.right-card {
+    flex: 1;
+    margin-right: 16px; /* Adjust the spacing between cards */
+    border-radius: 15px;
+    transition: 0.3s;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.right-card {
+    flex: 2;
+    margin-right: 7px; /* No margin on the right for the last card */
+    margin-left: 7px; /* No margin on the right for the last card */
+}
+/* End of Chart and divider cards */

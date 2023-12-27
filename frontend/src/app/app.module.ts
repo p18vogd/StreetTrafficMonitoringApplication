@@ -28,6 +28,10 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { NgChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { PieComponent } from './charts/pie/pie.component';
+import { SpeedLineComponent } from './charts/speed-line/speed-line.component';
+import { StatusTableComponent } from './charts/status-table/status-table.component';
 
 
 @NgModule({
@@ -36,7 +40,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     NavigationComponent,
     MapComponent,
     TableComponent,
-    DashboardComponent
+    DashboardComponent,
+    PieComponent,
+    SpeedLineComponent,
+    StatusTableComponent
   ],
     imports: [
         BrowserModule,
@@ -61,9 +68,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
         FormsModule,
         MatProgressBarModule,
         MatGridListModule,
-        NgChartsModule
+        NgChartsModule,
+        MatTabsModule
     ],
-  providers: [],
+  providers: [PieComponent,SpeedLineComponent,StatusTableComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

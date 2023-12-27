@@ -118,8 +118,8 @@ mat-card-footer i {
 
   .canvas {
     flex: 1;
-    width: auto !important;
-    height: auto !important; /* Adjust if needed, depending on the desired chart height */
+    max-width: 100%;
+    height: auto !important;
   }
 }
 

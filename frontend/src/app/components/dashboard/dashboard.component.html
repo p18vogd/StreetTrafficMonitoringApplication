@@ -136,25 +136,6 @@
 
 <!--  END OF MATCARDS-->
 
-<!--<div>-->
-<!--  <mat-card class="dashboard-card">-->
-<!--    <mat-tab-group>-->
-<!--      <mat-tab label="First">-->
-<!--        <mat-card-title>Counted cars</mat-card-title>-->
-<!--        <div class="dashboard-content">-->
-<!--          <canvas class="canvas" id="line-chart"></canvas>-->
-<!--        </div>-->
-<!--      </mat-tab>-->
-
-<!--      <mat-tab label="Second">-->
-<!--        <mat-card-title>Counted cars</mat-card-title>-->
-<!--        <div class="dashboard-content">-->
-<!--          <canvas id="line-chart-2"></canvas>-->
-<!--        </div>-->
-<!--      </mat-tab>-->
-<!--    </mat-tab-group>-->
-<!--  </mat-card>-->
-<!--</div>-->
 <mat-tab-group>
   <mat-tab label="Highest congestion"> <div class="card-container">
     <br>
@@ -178,8 +159,8 @@
 
     <mat-card class="left-card">
       <mat-card-content>
-        <mat-card-title>test</mat-card-title>
-        <mat-card-subtitle>Changes in vehicle speeds</mat-card-subtitle>
+        <mat-card-title>Vehicle count/Average speed insight</mat-card-title>
+        <mat-card-subtitle>Visualizing the vehicle distribution and their average speed</mat-card-subtitle>
         <ng-container *ngIf="isLoadingData">
           <div class="loading-container">
             <div class="dot dot1"></div>
@@ -187,7 +168,9 @@
             <div class="dot dot3"></div>
           </div>
         </ng-container>
-
+        <div class="dashboard-content">
+          <canvas class="canvas" id="pie-chart"></canvas>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
@@ -195,8 +178,8 @@
     <div class="card-container">
       <mat-card class="left-card">
         <mat-card-content>
-          <mat-card-title>Highest congregation of vehicles</mat-card-title>
-          <mat-card-subtitle>Streets with the highest number of vehicles passed by </mat-card-subtitle>
+          <mat-card-title>Speed Comparison</mat-card-title>
+          <mat-card-subtitle>Comparing the average vehicle speed to the city-wide average speed across all road networks.</mat-card-subtitle>
           <ng-container *ngIf="isLoadingData">
             <div class="loading-container">
               <div class="dot dot1"></div>
@@ -204,7 +187,24 @@
               <div class="dot dot3"></div>
             </div>
           </ng-container>
-            <app-status-table></app-status-table>
+          <br>
+          <mat-divider></mat-divider>
+          <div *ngFor="let item of streetArrayForTable; let i = index">
+            <mat-divider></mat-divider>
+            <div style="display: flex; justify-content: space-between;">
+              <mat-divider></mat-divider>
+              <p style="flex: 1; text-align: left;">{{item}}</p>
+              <p style="flex: 1; text-align: end;" [ngClass]="{'above-average': speedArrayForTable[i] > avg, 'below-average': speedArrayForTable[i] < avg, 'average': speedArrayForTable[i] === avg}">
+                <span style="color: green;" *ngIf="speedArrayForTable[i] > avg">&#11165; {{speedArrayForTable[i]}} Above city average</span>
+                <span style="color: red;" *ngIf="speedArrayForTable[i] < avg">&#11167; {{speedArrayForTable[i]}} Bellow city average</span>
+                <span style="color: #333333;" *ngIf="speedArrayForTable[i] === avg">&#61; {{speedArrayForTable[i]}} Equal city average</span>
+              </p>
+              <mat-divider></mat-divider>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+          <mat-divider></mat-divider>
+
         </mat-card-content>
       </mat-card>
 
