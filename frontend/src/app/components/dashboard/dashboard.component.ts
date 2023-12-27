@@ -33,6 +33,24 @@ export class DashboardComponent implements OnInit {
   numberOfSensors !: string;
   showCardFooter !: boolean;
 
+  //Chart variables (Highest Congestion)
+  ChartLabels!: string[];
+  ChartCountedCars !: any[];
+  ChartSpeed !: any[];
+  ChartTimeStamp !: any[];
+  ChartAVG !: any;
+  //let labels = data.map((data: { road_name: any; }) => data.road_name);
+  //       let dataset = data.map((data: { countedcars: any; }) => data.countedcars);
+  //       let speed = data.map((data: { average_speed: any; }) => data.average_speed);
+  //       let timestamps = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
+  //       this.vehicleData = data;
+  //       console.log(labels);
+  //       console.log(dataset);
+  //       this.speedArrayForTable = speed.map(speed => Math.floor(speed));
+  //       this.streetArrayForTable = labels;
+  //       this.avg
+
+
 
   constructor(private dashboardService: DashboardService,
               private dateAdapter: DateAdapter<Date>,
@@ -55,13 +73,12 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.formattedEndDate = selectedDate.value.toLocaleDateString();
       console.log('Selected End Date:', this.formattedEndDate);
       this.updateMiniCardContent(this.formattedStartDate,this.formattedEndDate);
-      this.updateChart(this.formattedStartDate, this.formattedEndDate);
+      this.getDashBoardChartData(this.formattedStartDate, this.formattedEndDate);
     }
   }
   ngOnInit(): void {
   }
-
-  updateChart(startDate: string, endDate: string): void {
+  getDashBoardChartData(startDate: string, endDate: string): void {
     this.isLoadingData = true;
     this.showCardFooter = false;
 
@@ -70,59 +87,62 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     params = params.append('endDate', endDate);
 
     this.dashboardService.getChartData(params).subscribe(data => {
-      let labels = data.map((data: { road_name: any; }) => data.road_name);
-      let dataset = data.map((data: { countedcars: any; }) => data.countedcars);
-      let speed = data.map((data: { average_speed: any; }) => data.average_speed);
-      let timestamps = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
-      this.vehicleData = data;
-      console.log(labels);
-      console.log(dataset);
-      this.speedArrayForTable = speed.map(speed => Math.floor(speed));
-      this.streetArrayForTable = labels;
-      this.avg
+      this.ChartLabels = data.map((data: { road_name: any; }) => data.road_name);
+      this.ChartCountedCars = data.map((data: { countedcars: any; }) => data.countedcars);
+      this.ChartSpeed = data.map((data: { average_speed: any; }) => data.average_speed);
+      this.ChartTimeStamp = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
+      // For Table Divider
+      this.streetArrayForTable = this.ChartLabels;
+      this.speedArrayForTable = this.ChartSpeed.map(speed => Math.floor(speed));
+      // Call other Charts
+      this.updateChart(this.ChartLabels,this.ChartCountedCars)
+      this.pieComponent.updatePieChart(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed);
+      this.speedLineComponent.updateLineChart(this.ChartLabels,this.ChartSpeed);
+      this.isLoadingData = false;
+      this.showCardFooter = true;
+    });
 
-      if (this.chart instanceof Chart) {
-        this.chart.destroy(); // Destroy the existing chart
-      }
+  }
 
-      this.chart = new Chart('bar-chart', {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: 'Cars passed by',
-              data: dataset,
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
+  updateChart(labels: string[], countedCars: any[]): void {
+    this.isLoadingData = true;
+    this.showCardFooter = false;
+    if (this.chart instanceof Chart) {
+      this.chart.destroy(); // Destroy the existing chart
+    }
+
+    this.chart = new Chart('bar-chart', {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Cars passed by',
+            data: countedCars,
+            borderWidth: 1,
           },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: (context) => {
-                  const label = context.label || '';
-                  const timestamp = timestamps[context.dataIndex];
-                  const formattedTimestamp = new Date(timestamp).toLocaleString();
-                  return `${label}: ${context.parsed.y} (Timestamp: ${formattedTimestamp})`;
-                },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const label = context.label || '';
+                const timestamp = this.ChartTimeStamp[context.dataIndex];
+                const formattedTimestamp = new Date(timestamp).toLocaleString();
+                return `${label}: ${context.parsed.y} (Timestamp: ${formattedTimestamp})`;
               },
             },
           },
         },
-      });
-      this.pieComponent.updatePieChart(labels,dataset,speed);
-      this.speedLineComponent.updateLineChart(labels,speed);
-      this.statusTableComponent.createDashboardTable(data,this.avg);
-      this.isLoadingData = false;
-      this.showCardFooter = true;
+      },
     });
   }
 
