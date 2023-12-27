@@ -4,6 +4,10 @@ import {DashboardService} from "../../services/dashboard.service";
 import {HttpParams} from "@angular/common/http";
 import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
+import {PieComponent} from "../../charts/pie/pie.component";
+import {SpeedLineComponent} from "../../charts/speed-line/speed-line.component";
+import {StatusTableComponent} from "../../charts/status-table/status-table.component";
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -18,6 +22,7 @@ export class DashboardComponent implements OnInit {
   formattedStartDate!: string;
   formattedEndDate!: string;
   isLoadingData !: boolean;
+  avg!:number;
 
   //MiniCard variables
   numberOfVehicles !: string;
@@ -28,7 +33,10 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private dashboardService: DashboardService,
-              private dateAdapter: DateAdapter<Date>)
+              private dateAdapter: DateAdapter<Date>,
+              private pieComponent: PieComponent,
+              private speedLineComponent : SpeedLineComponent,
+              private statusTableComponent : StatusTableComponent)
   {
     this.dateAdapter.setLocale('en-GB');
   }
@@ -44,8 +52,8 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     if (selectedDate.value) {
       this.formattedEndDate = selectedDate.value.toLocaleDateString();
       console.log('Selected End Date:', this.formattedEndDate);
-      this.updateChart(this.formattedStartDate, this.formattedEndDate);
       this.updateMiniCardContent(this.formattedStartDate,this.formattedEndDate);
+      this.updateChart(this.formattedStartDate, this.formattedEndDate);
     }
   }
   ngOnInit(): void {
@@ -62,6 +70,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     this.dashboardService.getChartData(params).subscribe(data => {
       let labels = data.map((data: { road_name: any; }) => data.road_name);
       let dataset = data.map((data: { countedcars: any; }) => data.countedcars);
+      let speed = data.map((data: { average_speed: any; }) => data.average_speed);
       let timestamps = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
       this.vehicleData = data;
       console.log(labels);
@@ -71,7 +80,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
         this.chart.destroy(); // Destroy the existing chart
       }
 
-      this.chart = new Chart('line-chart', {
+      this.chart = new Chart('bar-chart', {
         type: 'bar',
         data: {
           labels: labels,
@@ -104,7 +113,9 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
           },
         },
       });
-
+      // this.pieComponent.updatePieChart(labels,speed);
+      this.speedLineComponent.updateLineChart(labels,speed);
+      this.statusTableComponent.createDashboardTable(data,this.avg);
       this.isLoadingData = false;
       this.showCardFooter = true;
     });
@@ -116,6 +127,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     params = params.append('startDate', startDate);
     params = params.append('endDate',endDate);
     this.dashboardService.getMiniCardData(params).subscribe(data => {
+      this.avg = data[1];
       this.numberOfVehicles = data[0].toLocaleString("de-DE");
       this.averageSpeedInRoad = data[1].toString() + ' km/h';
       this.numberOfRoadsInNetwork = data[2].toString();
