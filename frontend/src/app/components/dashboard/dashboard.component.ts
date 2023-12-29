@@ -7,6 +7,7 @@ import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {PieComponent} from "../../charts/pie/pie.component";
 import {SpeedLineComponent} from "../../charts/speed-line/speed-line.component";
 import {StatusTableComponent} from "../../charts/status-table/status-table.component";
+import {MatTabChangeEvent} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-dashboard',
@@ -33,22 +34,19 @@ export class DashboardComponent implements OnInit {
   numberOfSensors !: string;
   showCardFooter !: boolean;
 
-  //Chart variables (Highest Congestion)
+  //---Chart variables (Highest Congestion)---
   ChartLabels!: string[];
   ChartCountedCars !: any[];
   ChartSpeed !: any[];
   ChartTimeStamp !: any[];
+  //---Chart variables (Low Congestion)---
+  LowChartLabels!: string[];
+  LowChartCountedCars !: any[];
+  LowChartSpeed !: any[];
+  LowChartTimeStamp !: any[];
+  //-----------------------//
   ChartAVG !: any;
-  //let labels = data.map((data: { road_name: any; }) => data.road_name);
-  //       let dataset = data.map((data: { countedcars: any; }) => data.countedcars);
-  //       let speed = data.map((data: { average_speed: any; }) => data.average_speed);
-  //       let timestamps = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
-  //       this.vehicleData = data;
-  //       console.log(labels);
-  //       console.log(dataset);
-  //       this.speedArrayForTable = speed.map(speed => Math.floor(speed));
-  //       this.streetArrayForTable = labels;
-  //       this.avg
+  buttonValue : string='Highest Congestion';
 
 
 
@@ -74,6 +72,21 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       console.log('Selected End Date:', this.formattedEndDate);
       this.updateMiniCardContent(this.formattedStartDate,this.formattedEndDate);
       this.getDashBoardChartData(this.formattedStartDate, this.formattedEndDate);
+      this.getDashBoardChartLowCongestionData(this.formattedStartDate, this.formattedEndDate);
+      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
+
+    }
+  }
+
+  onButtonClick(buttonValue: string){
+    if (buttonValue === 'Medium/Low Congestion'){
+      this.createChartsForDashboard(this.LowChartLabels,this.LowChartCountedCars,this.LowChartSpeed,'#36A2EB','#9BD0F5');
+    }else if (buttonValue === 'Highest Congestion'){
+      console.log('HighestCong1');
+      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
+    }else{
+      console.log('HighestCong2');
+      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
     }
   }
   ngOnInit(): void {
@@ -91,22 +104,52 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.ChartCountedCars = data.map((data: { countedcars: any; }) => data.countedcars);
       this.ChartSpeed = data.map((data: { average_speed: any; }) => data.average_speed);
       this.ChartTimeStamp = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
+
       // For Table Divider
       this.streetArrayForTable = this.ChartLabels;
       this.speedArrayForTable = this.ChartSpeed.map(speed => Math.floor(speed));
-      // Call other Charts
-      this.updateChart(this.ChartLabels,this.ChartCountedCars)
-      this.pieComponent.updatePieChart(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed);
-      this.speedLineComponent.updateLineChart(this.ChartLabels,this.ChartSpeed);
+      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
+    });
+    this.isLoadingData = false;
+    this.showCardFooter = true;
+  }
+
+  getDashBoardChartLowCongestionData(startDate: string, endDate: string): void {
+    this.isLoadingData = true;
+    this.showCardFooter = false;
+
+    let params = new HttpParams();
+    params = params.append('startDate', startDate);
+    params = params.append('endDate', endDate);
+
+    this.dashboardService.getLowCongestionData(params).subscribe(data => {
+      this.LowChartLabels = data.map((data: { road_name: any; }) => data.road_name);
+      this.LowChartCountedCars = data.map((data: { countedcars: any; }) => data.countedcars);
+      this.LowChartSpeed = data.map((data: { average_speed: any; }) => data.average_speed);
+      this.LowChartTimeStamp = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
+
+      // For Table Divider
+      this.streetArrayForTable = this.LowChartLabels;
+      this.speedArrayForTable = this.LowChartSpeed.map(speed => Math.floor(speed));
       this.isLoadingData = false;
       this.showCardFooter = true;
     });
 
+
   }
 
-  updateChart(labels: string[], countedCars: any[]): void {
-    this.isLoadingData = true;
-    this.showCardFooter = false;
+  createChartsForDashboard(labels:any[],countedCars:any[],carSpeed:any[],boarderColor: string,backgroundColor: string){
+    this.updateChart(labels,countedCars,boarderColor,backgroundColor);
+    this.pieComponent.updatePieChart(labels,countedCars,carSpeed);
+    this.speedLineComponent.updateLineChart(labels,carSpeed);
+    // this.isLoadingData = false;
+    // this.showCardFooter = true;
+
+    console.log('CHARTS called');
+  }
+
+  updateChart(labels: string[], countedCars: any[], boarderColor: string,backgroundColor: string): void {
+
     if (this.chart instanceof Chart) {
       this.chart.destroy(); // Destroy the existing chart
     }
@@ -120,6 +163,8 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
             label: 'Cars passed by',
             data: countedCars,
             borderWidth: 1,
+            borderColor: boarderColor,
+            backgroundColor: backgroundColor,
           },
         ],
       },
@@ -144,10 +189,14 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
         },
       },
     });
+    // this.isLoadingData = false;
+    // this.showCardFooter = true;
   }
 
 
   updateMiniCardContent(startDate: string, endDate: string): void {
+    this.isLoadingData = true;
+    this.showCardFooter = false;
     let params = new HttpParams();
     params = params.append('startDate', startDate);
     params = params.append('endDate',endDate);
@@ -170,5 +219,8 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
         this.numberOfSensors = 'No available data'
       }
     });
+    console.log('first called');
+    this.isLoadingData = false;
+    this.showCardFooter = true;
   }
 }

@@ -213,6 +213,8 @@ mat-card-footer i {
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
+  max-height: 500px; /* Set the maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .right-card {
@@ -221,3 +223,67 @@ mat-card-footer i {
   margin-left: 7px; /* No margin on the right for the last card */
 }
 /* End of Chart and divider cards */
+.modern-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.modern-settings-button {
+  background-color: transparent;
+  color: #050505;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.modern-settings-button:hover {
+  color: #4951ad;
+  animation: spin1 1s linear, spin2 1s linear; /* Apply both spinning animations */
+}
+
+.modern-settings-icon {
+  font-size: 20px;
+}
+
+.mat-menu {
+  overflow: hidden;
+}
+
+.mat-menu-item {
+  white-space: nowrap;
+  font-size: 10px;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.mat-menu-item:hover {
+  background-color: #ffffff;
+}
+
+.mat-menu-item.slide-in {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Spinning animation keyframes */
+@keyframes spin1 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes spin2 {
+  from {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+

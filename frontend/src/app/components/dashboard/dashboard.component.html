@@ -133,11 +133,17 @@
     </mat-card>
   </div>
 </div>
-
 <!--  END OF MATCARDS-->
-
-<mat-tab-group>
-  <mat-tab label="Highest congestion"> <div class="card-container">
+<div class="modern-button-container">
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="modern-settings-button">
+    <i class="material-icons modern-settings-icon">settings</i>
+  </button>
+  <mat-menu #menu="matMenu" class="modern-menu">
+    <button mat-menu-item (click)="onButtonClick('Highest Congestion')" class="slide-in">Highest Congestion</button>
+    <button mat-menu-item (click)="onButtonClick('Medium/Low Congestion')" class="slide-in">Medium/Low Congestion</button>
+  </mat-menu>
+</div>
+    <div class="card-container">
     <br>
     <mat-card class="right-card">
       <mat-card-content>
@@ -219,75 +225,13 @@
               <div class="dot dot3"></div>
             </div>
           </ng-container>
+
           <div class="dashboard-content">
             <canvas class="canvas" id="speed-line-chart"></canvas>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
-  </mat-tab>
-
-  <mat-tab label="Medium/Low congestion"> <div class="card-container">
-    <br>
-    <mat-card class="right-card">
-      <mat-card-content>
-        <mat-card-title>Least amount of vehicles</mat-card-title>
-        <mat-card-subtitle>Last 10 street with the highest number of vehicles passed by </mat-card-subtitle>
-        <ng-container *ngIf="isLoadingData">
-          <div class="loading-container">
-            <div class="dot dot1"></div>
-            <div class="dot dot2"></div>
-            <div class="dot dot3"></div>
-          </div>
-        </ng-container>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="left-card">
-      <mat-card-content>
-        <mat-card-title>Speed Overview</mat-card-title>
-        <mat-card-subtitle>Changes in vehicle speeds</mat-card-subtitle>
-        <ng-container *ngIf="isLoadingData">
-          <div class="loading-container">
-            <div class="dot dot1"></div>
-            <div class="dot dot2"></div>
-            <div class="dot dot3"></div>
-          </div>
-        </ng-container>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-    <div class="card-container">
-      <mat-card class="left-card">
-        <mat-card-content>
-          <mat-card-title>Highest amount of vehicles</mat-card-title>
-          <mat-card-subtitle>Top 10 street with the highest number of vehicles passed by </mat-card-subtitle>
-          <ng-container *ngIf="isLoadingData">
-            <div class="loading-container">
-              <div class="dot dot1"></div>
-              <div class="dot dot2"></div>
-              <div class="dot dot3"></div>
-            </div>
-          </ng-container>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="right-card">
-        <mat-card-content>
-          <mat-card-title>Speed Overview</mat-card-title>
-          <mat-card-subtitle>Changes in vehicle speeds</mat-card-subtitle>
-          <ng-container *ngIf="isLoadingData">
-            <div class="loading-container">
-              <div class="dot dot1"></div>
-              <div class="dot dot2"></div>
-              <div class="dot dot3"></div>
-            </div>
-          </ng-container>
-        </mat-card-content>
-      </mat-card>
-    </div></mat-tab>
-</mat-tab-group>
 
 
 
