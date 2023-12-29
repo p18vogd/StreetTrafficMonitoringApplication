@@ -161,6 +161,10 @@
         </div>
 
       </mat-card-content>
+      <ng-container *ngIf="showCardFooter">
+        <mat-divider></mat-divider>
+        <mat-card-footer><i class="material-icons" style="font-size:13px">update</i>Updated</mat-card-footer>
+      </ng-container>
     </mat-card>
 
     <mat-card class="left-card">
@@ -178,6 +182,10 @@
           <canvas class="canvas" id="pie-chart"></canvas>
         </div>
       </mat-card-content>
+      <ng-container *ngIf="showCardFooter">
+        <mat-divider></mat-divider>
+        <mat-card-footer><i class="material-icons" style="font-size:13px">update</i>Updated</mat-card-footer>
+      </ng-container>
     </mat-card>
   </div>
 
@@ -212,6 +220,10 @@
           <mat-divider></mat-divider>
 
         </mat-card-content>
+        <ng-container *ngIf="showCardFooter">
+          <mat-divider></mat-divider>
+          <mat-card-footer><i class="material-icons" style="font-size:13px">update</i>Updated</mat-card-footer>
+        </ng-container>
       </mat-card>
 
       <mat-card class="right-card">
@@ -230,6 +242,10 @@
             <canvas class="canvas" id="speed-line-chart"></canvas>
           </div>
         </mat-card-content>
+        <ng-container *ngIf="showCardFooter">
+          <mat-divider></mat-divider>
+          <mat-card-footer><i class="material-icons" style="font-size:13px">update</i>Updated</mat-card-footer>
+        </ng-container>
       </mat-card>
     </div>
 

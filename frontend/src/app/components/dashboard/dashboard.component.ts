@@ -74,7 +74,20 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.getDashBoardChartData(this.formattedStartDate, this.formattedEndDate);
       this.getDashBoardChartLowCongestionData(this.formattedStartDate, this.formattedEndDate);
       this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
+      this.onButtonClick('Highest Congestion');
+      this.destroyOnUpdateCharts();
+    }
+  }
 
+  destroyOnUpdateCharts(){
+    if (this.chart instanceof Chart) {
+      this.chart.destroy(); // Destroy the existing chart
+    }
+    if (this.pieComponent.chart instanceof Chart) {
+      this.pieComponent.chart.destroy(); // Destroy the existing chart
+    }
+    if (this.speedLineComponent.chart instanceof Chart) {
+      this.speedLineComponent.chart.destroy(); // Destroy the existing chart
     }
   }
 
@@ -109,6 +122,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.streetArrayForTable = this.ChartLabels;
       this.speedArrayForTable = this.ChartSpeed.map(speed => Math.floor(speed));
       this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
+      this.onButtonClick('Highest Congestion');
     });
     this.isLoadingData = false;
     this.showCardFooter = true;
@@ -139,9 +153,15 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
   }
 
   createChartsForDashboard(labels:any[],countedCars:any[],carSpeed:any[],boarderColor: string,backgroundColor: string){
+    // this.isLoadingData = true;
+    // this.showCardFooter = false;
     this.updateChart(labels,countedCars,boarderColor,backgroundColor);
     this.pieComponent.updatePieChart(labels,countedCars,carSpeed);
     this.speedLineComponent.updateLineChart(labels,carSpeed);
+
+    //
+    this.streetArrayForTable = labels;
+    this.speedArrayForTable = carSpeed.map(carSpeed => Math.floor(carSpeed));
     // this.isLoadingData = false;
     // this.showCardFooter = true;
 
