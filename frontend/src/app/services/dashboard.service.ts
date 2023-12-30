@@ -9,6 +9,7 @@ import numbers = _default.defaults.animations.numbers;
 })
 export class DashboardService {
   private apiUrl = 'http://' + HOST + ':' + PORT + '/getTenHighestCarCountStreets' ;
+  private lowCongestionUrl = 'http://' + HOST + ':' + PORT + '/getLowCongestionData' ;
   private miniCardUrl = 'http://' + HOST + ':' + PORT + '/getMiniCardData' ;
   constructor(private http: HttpClient) { }
 
@@ -18,6 +19,11 @@ export class DashboardService {
   getMiniCardData(requestParams : HttpParams): Observable<number[]> {
     return this.http.get<number[]>(this.miniCardUrl, {params : requestParams});
   }
+
+  getLowCongestionData(requestParams : HttpParams): Observable<TableItem[]> {
+    return this.http.get<TableItem[]>(this.lowCongestionUrl, {params : requestParams});
+  }
+
 }
 export interface TableItem {
   road_name: string;

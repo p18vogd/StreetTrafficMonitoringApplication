@@ -32,6 +32,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import { PieComponent } from './charts/pie/pie.component';
 import { SpeedLineComponent } from './charts/speed-line/speed-line.component';
 import { StatusTableComponent } from './charts/status-table/status-table.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { StatusTableComponent } from './charts/status-table/status-table.compone
         MatProgressBarModule,
         MatGridListModule,
         NgChartsModule,
-        MatTabsModule
+        MatTabsModule,
+        MatButtonToggleModule
     ],
   providers: [PieComponent,SpeedLineComponent,StatusTableComponent],
   bootstrap: [AppComponent]

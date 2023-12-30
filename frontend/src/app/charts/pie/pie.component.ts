@@ -47,8 +47,6 @@ export class PieComponent implements OnInit {
         }
       },
     });
-    this.isLoadingData = false;
-    this.showCardFooter = true;
   }
   ngOnInit() {
   }

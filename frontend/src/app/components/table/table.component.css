@@ -41,4 +41,10 @@ mat-icon {
   margin-right: 5px;
 }
 
+.mat-mdc-form-field-filter {
+  font-size: 14px;
+  padding-left: 15px;
+  padding-inline-end: 15px;
+  width: 100%;
+}
 

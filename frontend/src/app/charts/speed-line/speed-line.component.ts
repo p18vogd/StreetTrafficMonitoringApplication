@@ -13,7 +13,7 @@ export class SpeedLineComponent implements OnInit {
   showCardFooter !: boolean;
   constructor() {}
 
-  updateLineChart(labels: string[], dataset: string[]): void {
+  updateLineChart(labels: string[], dataset: string[],boarderColor:string,backgroundColor:string): void {
 
 
     if (this.chart instanceof Chart) {
@@ -29,6 +29,8 @@ export class SpeedLineComponent implements OnInit {
             label: 'Changes in vehicle speed',
             data: dataset,
             borderWidth: 1,
+            borderColor: boarderColor,
+            backgroundColor: backgroundColor
           },
         ],
       },
@@ -41,8 +43,6 @@ export class SpeedLineComponent implements OnInit {
         }
       },
     });
-    this.isLoadingData = false;
-    this.showCardFooter = true;
   }
   ngOnInit() {
   }

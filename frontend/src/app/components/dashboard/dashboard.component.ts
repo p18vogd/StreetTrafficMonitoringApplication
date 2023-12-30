@@ -70,6 +70,8 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     if (selectedDate.value) {
       this.formattedEndDate = selectedDate.value.toLocaleDateString();
       console.log('Selected End Date:', this.formattedEndDate);
+      this.streetArrayForTable = []
+      this.speedArrayForTable = [];
       this.updateMiniCardContent(this.formattedStartDate,this.formattedEndDate);
       this.getDashBoardChartData(this.formattedStartDate, this.formattedEndDate);
       this.getDashBoardChartLowCongestionData(this.formattedStartDate, this.formattedEndDate);
@@ -96,10 +98,10 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.createChartsForDashboard(this.LowChartLabels,this.LowChartCountedCars,this.LowChartSpeed,'#36A2EB','#9BD0F5');
     }else if (buttonValue === 'Highest Congestion'){
       console.log('HighestCong1');
-      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
+      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#ff809f','#ffb6c1');
     }else{
       console.log('HighestCong2');
-      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
+      this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#ff809f','#ffb6c1');
     }
   }
   ngOnInit(): void {
@@ -119,8 +121,6 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.ChartTimeStamp = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
 
       // For Table Divider
-      this.streetArrayForTable = this.ChartLabels;
-      this.speedArrayForTable = this.ChartSpeed.map(speed => Math.floor(speed));
       this.createChartsForDashboard(this.ChartLabels,this.ChartCountedCars,this.ChartSpeed,'#e16d84','#eca6b5');
       this.onButtonClick('Highest Congestion');
     });
@@ -143,8 +143,6 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
       this.LowChartTimeStamp = data.map((data: { appprocesstime: any; }) => data.appprocesstime);
 
       // For Table Divider
-      this.streetArrayForTable = this.LowChartLabels;
-      this.speedArrayForTable = this.LowChartSpeed.map(speed => Math.floor(speed));
       this.isLoadingData = false;
       this.showCardFooter = true;
     });
@@ -157,7 +155,7 @@ onStartDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     // this.showCardFooter = false;
     this.updateChart(labels,countedCars,boarderColor,backgroundColor);
     this.pieComponent.updatePieChart(labels,countedCars,carSpeed);
-    this.speedLineComponent.updateLineChart(labels,carSpeed);
+    this.speedLineComponent.updateLineChart(labels,carSpeed,boarderColor,backgroundColor);
 
     //
     this.streetArrayForTable = labels;

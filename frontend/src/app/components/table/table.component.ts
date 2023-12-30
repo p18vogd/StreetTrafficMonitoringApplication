@@ -5,6 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatDatepicker, MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {DateAdapter, MAT_DATE_LOCALE} from "@angular/material/core";
 import {HttpParams} from "@angular/common/http";
+import {MatSort} from "@angular/material/sort";
 
 export interface TableItem {
   road_name: string;
@@ -26,6 +27,7 @@ export class TableComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
+  @ViewChild(MatSort) sort!: MatSort;
 
   date!: MatDatepicker<Date>
   constructor(private tableService: TableService,
@@ -48,7 +50,10 @@ export class TableComponent implements OnInit {
       console.log('Selected Start Date:', this.formattedStartDate);
     }
   }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   onEndDateChange(selectedDate: MatDatepickerInputEvent<any, any>) {
     if (selectedDate.value) {
       this.formattedEndDate = selectedDate.value.toLocaleDateString();
@@ -67,6 +72,7 @@ export class TableComponent implements OnInit {
       (data: TableItem[]) => {
         this.dataSource = new MatTableDataSource<TableItem>(data);
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.updateTableContent = false;
 
         if(this.dataSource.data.length === 0){
