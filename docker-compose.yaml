@@ -8,32 +8,8 @@ services:
       context: ./backend
     ports:
       - "8080:8082"
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:influxdb://influxdb:8086/TrafficDatabase
-        - SPRING_DATASOURCE_USERNAME=admin
-        - SPRING_DATASOURCE_PASSWORD=admin12345
     networks:
       - backend-network
-#    depends_on:
-#      - influxdb
-
-#  influxdb:
-#    container_name: influxdb
-#    image: influxdb:latest
-#    ports:
-#      - '8086:8086'
-#    volumes:
-#      - influxdb-storage:/var/lib/influxdb
-#    environment:
-#      - DOCKER_INFLUXDB_INIT_MODE=setup
-#      - DOCKER_INFLUXDB_INIT_USERNAME=admin
-#      - DOCKER_INFLUXDB_INIT_PASSWORD=admin12345
-#      - DOCKER_INFLUXDB_INIT_ORG=TrafficProject
-#      - DOCKER_INFLUXDB_INIT_BUCKET=test-bucket
-#      - DOCKER_INFLUXDB_INIT_RETENTION=1w
-##      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=randomTokenValue
-#    networks:
-#      - backend-network
 
   frontend:
     container_name: frontend
@@ -49,5 +25,3 @@ services:
 networks:
   backend-network:
     driver: bridge
-volumes:
-  influxdb-storage:
