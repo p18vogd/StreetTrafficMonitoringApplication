@@ -26,9 +26,12 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/@tomtom-international/web-sdk-maps/dist/maps.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@tomtom-international/web-sdk-maps/dist/maps.min.js"
+            ]
           },
           "configurations": {
             "production": {

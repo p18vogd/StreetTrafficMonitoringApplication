@@ -33,6 +33,7 @@ import { PieComponent } from './charts/pie/pie.component';
 import { SpeedLineComponent } from './charts/speed-line/speed-line.component';
 import { StatusTableComponent } from './charts/status-table/status-table.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @NgModule({
