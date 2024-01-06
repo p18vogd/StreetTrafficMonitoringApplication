@@ -1,0 +1,82 @@
+<h2 mat-dialog-title>Traffic Data API Documentation</h2>
+<mat-dialog-content class="mat-typography">
+  <section>
+  <h2>Overview</h2>
+  <p>The Traffic Data API provides information about traffic on various streets. The data includes the number
+    of cars, timestamps, average speed, sensor information, street information, and street names.</p>
+  </section>
+  <section>
+  <h2>Base URL</h2>
+    <p>The base URL for the API is <code>http://localhost:8082</code>.</p>
+  </section>
+  <section>
+    <h2>Endpoints</h2>
+    <h3><b>Get data for a specific time period</b></h3>
+    <p>The base URL for the API is <code>http://localhost:8082/gov</code>.</p>
+
+    <h3><b>Data for streets with highest congestion</b></h3>
+    <h4>Retrieves and returns a list of the ten streets with
+      the highest car count within the specified date range. The list is sorted</h4>
+    <p>GET :  <code>http://localhost:8082/getTenHighestCarCountStreets</code>.</p>
+
+    <h3><b>Data for streets with medium/low congestion</b></h3>
+    <h4>Retrieves and returns a list twenty streets with
+      the medium or low car count within the specified date range. The list is sorted</h4>
+    <p>GET :  <code>http://localhost:8082/getLowCongestionData</code>.</p>
+
+    <h3><b>Average data that covers road network</b></h3>
+    <h4>Retrieves and returns a list of the average speed in road network, the number of all vehicles on street
+    the number of sensors that was available for that day and the number of streets that was monitored</h4>
+    <p>GET :  <code>http://localhost:8082/getMiniCardData</code>.</p>
+  </section>
+  <section>
+    <h2>Parameters</h2>
+    <p>All endpoints require parameters to determine the time period you want the data to be retrieved. Those params are the
+    following</p>
+    <ul>
+      <li><code>startDate</code> (String): Start date for the data retrieval ( Format: <code>DD/MM/YYYY</code> )</li>
+      <li><code>endDate</code> (String): End date for the data retrieval ( Format: <code>DD/MM/YYYY</code> )</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Example</h2>
+    <p>The following example is demonstrating the way to retrieve traffic data using the <code>/gov</code> endpoint. This endpoint will return a large json
+      response containing all the info about the traffic condition from <code>March 3 2022</code> to <code>March 5 2022</code></p>
+    <h3><code> GET : http://localhost:8082/gov?startDate=03/03/2022&amp;endDate=05/03/2022</code></h3>
+    <h3>Response</h3>
+    <p>Here's an example of displaying a JSON response:</p>
+    <pre><code>[
+      &quot;
+      "road_name": "ΚΑΤΕΧΑΚΗ",
+      "road_info": "ΚΥΡΙΟΣ ΔΡΟΜΟΣ ΜΕ ΚΑΤΕΥΘΥΝΣΗ ΠΡΟΣ Λ. ΚΗΦΙΣΙΑΣ 180 Μ. ΠΡΙΝ ΑΠΟ ΤΗ Λ. ΜΕΣΟΓΕΙΩΝ",
+      "countedcars": 13400,
+      "average_speed": 47.6179104477612,
+      "appprocesstime": "2022-03-03T00:00:00.000+00:00",
+      "deviceid": "MS447"
+    },
+      &quot;
+      "road_name": "Λ. ΜΕΣΟΓΕΙΩΝ",
+      "road_info": "ΚΥΡΙΟΣ ΔΡΟΜΟΣ ΜΕ ΚΑΤΕΥΘΥΝΣΗ ΚΕΝΤΡΟ 120 Μ. ΠΡΙΝ ΑΠΟ ΤΗ ΞΕΝΟΠΟΥΛΟΥ",
+      "countedcars": 15200,
+      "average_speed": 59.31842105263158,
+      "appprocesstime": "2022-03-03T00:00:00.000+00:00",
+      "deviceid": "MS449"
+    },
+      &quot;
+      "road_name": "ΞΕΝΟΠΟΥΛΟΥ",
+      "road_info": "ΚΥΡΙΟΣ ΔΡΟΜΟΣ 80 Μ. ΠΡΙΝ ΑΠΟ ΤΗ Λ. ΜΕΣΟΓΕΙΩΝ",
+      "countedcars": 1800,
+      "average_speed": 40.68888888888889,
+      "appprocesstime": "2022-03-03T00:00:00.000+00:00",
+      "deviceid": "MS450"
+    &quot;,
+    ....
+    ]</code></pre>
+  </section>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <a mat-button href="https://github.com/p18vogd/StreetTrafficMonitoringApplication" target="_blank">Contribute to GitHub</a>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

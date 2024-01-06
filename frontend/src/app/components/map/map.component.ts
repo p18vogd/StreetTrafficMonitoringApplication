@@ -1,12 +1,14 @@
-
-import { Component, OnInit } from '@angular/core';
-import * as tt from '@tomtom-international/web-sdk-maps';
-import { HttpClient } from '@angular/common/http';
-
+import {AfterViewInit, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import tt from '@tomtom-international/web-sdk-maps';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+import {Chart} from 'chart.js/auto';
+import {HttpClient} from "@angular/common/http";
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MapComponent {
   // private map: any;

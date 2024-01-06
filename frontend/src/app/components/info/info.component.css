@@ -1,0 +1,18 @@
+
+section {
+  margin-bottom: 1em;
+}
+
+code {
+  font-family: monospace;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+pre {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}

@@ -33,7 +33,8 @@ import { PieComponent } from './charts/pie/pie.component';
 import { SpeedLineComponent } from './charts/speed-line/speed-line.component';
 import { StatusTableComponent } from './charts/status-table/status-table.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import { InfoComponent } from './components/info/info.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {MatDialog} from "@angular/material/dialog";
     DashboardComponent,
     PieComponent,
     SpeedLineComponent,
-    StatusTableComponent
+    StatusTableComponent,
+    InfoComponent
   ],
     imports: [
         BrowserModule,
@@ -72,9 +74,10 @@ import {MatDialog} from "@angular/material/dialog";
         MatGridListModule,
         NgChartsModule,
         MatTabsModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatDialogModule
     ],
-  providers: [PieComponent,SpeedLineComponent,StatusTableComponent],
+  providers: [PieComponent,SpeedLineComponent,StatusTableComponent,MatDialog],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

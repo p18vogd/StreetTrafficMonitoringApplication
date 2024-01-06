@@ -3,6 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AsyncPipe, NgIf } from '@angular/common';
+import {InfoComponent} from "../info/info.component";
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-navigation',
@@ -11,10 +13,13 @@ import { AsyncPipe, NgIf } from '@angular/common';
 })
 export class NavigationComponent {
   private breakpointObserver = inject(BreakpointObserver);
-
+  constructor(public dialog: MatDialog) {}
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
+  openDialog() {
+    this.dialog.open(InfoComponent);
+  }
 }
