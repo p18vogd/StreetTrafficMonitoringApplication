@@ -3,6 +3,7 @@ package com.example.TrafficProject.features;
 import com.example.TrafficProject.model.GovApiData;
 import com.example.TrafficProject.service.GovAPIService;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.text.NumberFormat;
@@ -17,9 +18,8 @@ public class DashboardFeatures {
         return this.govAPIService.getGOVTrafficData(startDate,endDate).block();
     }
 
-    public List<GovApiData> getTenStreetsWithHighestCarCount(String startDate, String endDate){
+    public List<GovApiData> sortStreetData(String startDate, String endDate){
         List<GovApiData> streetData = this.govAPIService.getGOVTrafficData(startDate,endDate).block();
-
         return streetData.stream()
                 .collect(Collectors.groupingBy(GovApiData::getRoad_name)) // Group by road name
                 .values().stream()
@@ -27,8 +27,29 @@ public class DashboardFeatures {
                         .max(Comparator.comparingInt(GovApiData::getCountedCars))) // Get the road data with the max counted cars for each road
                 .filter(Optional::isPresent)
                 .map(Optional::get)
+                .sorted((rd1, rd2) -> rd2.getCountedCars() - rd1.getCountedCars())
+                .collect(Collectors.toList());
+    }
+
+    public List<GovApiData> getLowCongestionData(List<GovApiData> streetData){
+
+        long count = streetData.stream()
+                .collect(Collectors.groupingBy(GovApiData::getRoad_name)) // Group by road name
+                .values().stream()
+                .map(roadDatas -> roadDatas.stream()
+                        .max(Comparator.comparingInt(GovApiData::getCountedCars))) // Get the road data with the max counted cars for each road
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .sorted((rd1, rd2) -> rd2.getCountedCars() - rd1.getCountedCars()) // Sort in descending order of counted cars
-                .limit(10) // Limit to top 10
+                .count(); // Get the total number of elements
+
+        return streetData.stream()
+                .skip(count > 20 ? count - 20 : 0)
+                .collect(Collectors.toList());
+    }
+    public List<GovApiData> getTenStreetsWithHighestCarCount(List<GovApiData> streetData){
+        return  streetData.stream()
+                .limit(10)
                 .collect(Collectors.toList());
     }
 
@@ -38,7 +59,7 @@ public class DashboardFeatures {
 
         long numberOfVehicles = streetData.stream()
                 .map(GovApiData::getCountedCars)
-                .mapToInt(Integer::intValue).sum();
+                .mapToLong(Integer::intValue).sum();
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.GERMANY);
         String formattedNumber = numberFormat.format(numberOfVehicles);
