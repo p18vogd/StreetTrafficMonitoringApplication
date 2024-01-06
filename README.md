@@ -1,13 +1,13 @@
-# Spring Boot Application with Java 17, Maven, and Docker Compose
+# Spring Boot - Angular Application with Java 17, Maven, and Docker Compose
 
 ## Overview
-
-This is a Spring Boot application built with Java 17 and managed by Maven. The application is containerized using Docker, and Docker Compose is used for orchestrating the containers.
-
+This is a full-stack application featuring a Spring Boot backend built with Java 17 and managed by Maven. Frontend is build in Angular utilizes the Material library for UI components and Chart.js for chart visualization. The entire application is containerized using Docker, and Docker Compose is used for orchestrating the containers.
 ## Prerequisites
 
 - Java 17 (Make sure to have Java 17 installed)
 - Maven (https://maven.apache.org/download.cgi)
+- Node.js 16.2.10 (https://nodejs.org/)
+- Angular CLI 16.2.12 (https://angular.io/guide/setup-local)
 - Docker (https://docs.docker.com/get-docker/)
 - Docker Compose (https://docs.docker.com/compose/install/)
 
@@ -26,25 +26,36 @@ This is a Spring Boot application built with Java 17 and managed by Maven. The a
     mvn clean install -DskipTests
     ```
 
-3. **Build Docker Image:**
+3. **Build Angular Application:**
 
     ```bash
-    docker build -t your-docker-image-name .
+    cd frontend
+    npm install
+    ng build
     ```
 
-4. **Run Docker Compose:**
+4. **Build Docker Image:**
+
+    ```bash
+    docker build -t traffic-app .
+    ```
+
+5. **Run Docker Compose:**
 
     ```bash
     docker-compose up -d
     ```
 
-5. **Access the Application:**
+6. **Access the Application:**
 
    The Spring Boot application will be available at [http://localhost:8080](http://localhost:8080).
 
+   The Angular application will be available at [http://localhost:4200](http://localhost:4200).
+
 ## Project Structure
 
-- `src/`: Contains the source code of the Spring Boot application.
+- `backend/`: Contains the source code of the Spring Boot application.
+- `frontend/`: Contains the Angular frontend application.
 - `pom.xml`: Maven project configuration file.
 - `Dockerfile`: Docker configuration file for building the application image.
 - `docker-compose.yml`: Docker Compose configuration for orchestrating containers.
@@ -58,6 +69,7 @@ This is a Spring Boot application built with Java 17 and managed by Maven. The a
 
 - Ensure that the required ports are available and not in use.
 - Make sure to update sensitive information and credentials in the configuration files.
+- Make sure to update `ApplicatonHosts.ts` in `frontend/` depending on the port backend is running .
 
 ## Contributing
 
